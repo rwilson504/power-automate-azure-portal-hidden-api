@@ -1,4 +1,4 @@
-![Power Automate Blueprint Accessing Azure Portal Backend APIs and the Intricacies of main.iam.ad.ext.azure.com](images/image.png)
+![Power Automate Blueprint Accessing Azure Portal Backend APIs and the Intricacies of main.iam.ad.ext.azure.com](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/6f67a1f1-2456-48d0-8638-93fa3cabb301)
 
 In the realms of digital infrastructure management, automation emerges as a pivotal ally, especially when confronting repetitive and time-sensitive tasks. A recent endeavor led me to a scenario where automating the management of OAuth tokens for users within our organization was paramount. Our meticulous record-keeping of these tokens and their respective assignments is handled through Power Apps. However, the manual aspect of adding these tokens via the Azure portal, which necessitated the upload of a CSV file each time, posed a cumbersome challenge.
 
@@ -32,7 +32,7 @@ Azure Key Vault is a pivotal component in this setup, acting as a secure reposit
 
 Before diving into scripts or deployment files, ensure that the necessary Azure resource providers are registered within your subscription, particularly Microsoft.Authorization and Microsoft.KeyVault. These providers are crucial for creating and managing the Key Vault and setting the necessary permissions.
 
-![Alt text](images/image-10.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/3a9826cb-ecd9-42f8-91d2-df47a48ba54f)
 
 ### Deployment Options
 
@@ -52,11 +52,11 @@ Bicep is a declarative language for describing and deploying Azure resources. It
 
 What is great about these files is that you can easily deploy from within Visual Studio Code.  Just install the Bicep extension.
 
-![Alt text](images/image-12.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/dbbbe922-8346-4756-94ab-49d5be154186)
 
 Then right click on the bicep file to deploy.  The main.parameters.json file can be used to supply all the necessary parameters for deployment.
 
-![Alt text](images/image-11.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/be99a9fc-c4c7-4fc9-91fc-c78827e521ff)
 
 Both deployment methods are designed to abstract the complexities involved in setting up Azure Key Vault, providing a straightforward path to secure the refresh token necessary for automation.
 
@@ -89,14 +89,14 @@ Embarking on the automation of OAuth token management necessitates a structured 
 - Generate a new secret, copying the secret value for safekeeping, as it will be crucial when creating the connection for Key Vault in Power Automate.
 - Ensure to also copy the Application (Client) ID and the Directory (tenant) ID, which will be required for the connection within Power Automate.
   
-![App Registration Details](images/image-1.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/24dad312-b9bd-4d55-88ea-ca887b191ce6)
 
 ### Install the Azure Key Vault Custom Connectors
   
 Either install the Azure Key Vault custom connectors solution [AzurePortalAPICustomConnector_1_0_0_2](./power-platform-solutions/AzurePortalAPICustomConnector_1_0_0_2.zip), or follow the installation guidelines provided [here](https://github.com/Microsoft/PowerPlatformConnectors/tree/master/custom-connectors/AzureKeyVault). Utilizing a custom connector is vital since the certified connector for Key Vault doesn’t allow writing secrets back to the Key Vault, a feature requisite for this solution.
 - Update the host URL to reflect your new Key Vault.
 
-![Update Host URL](images/image-6.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/e6291654-ecc1-4915-b729-95c8f6b0e3d6)
 
 - Revise the security section:
 - Ensure the Enable Service Principal support option is selected.
@@ -108,23 +108,23 @@ Either install the Azure Key Vault custom connectors solution [AzurePortalAPICus
     - Azure Cloud: `https://vault.azure.net`
     - Azure Government: `https://vault.usgovcloudapi.net`
 
-![Update Security Section](images/image-8.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/3a05e59e-d23e-40f5-8cad-bfbae5a11f60)
 
 - Copy the Redirect URL from the security section, to be added within the app registration later.
 
-![Copy Redirect URL](images/image-7.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/0dd6016d-b327-408e-8133-f67648bc4ce4)
 
 ### Update App Registration
 
 Incorporate the Power Automate redirect URL into the app registration.
 
-![Update Redirect URL](images/image-9.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/d060a313-94b5-4cc1-994f-dce807295d1b)
 
 ### Key Vault Access Management
 
 Designate the app registration as a Key Vault Secrets Officer in Key Vault, ensuring the requisite permissions for reading and writing secrets are granted.
 
-![Key Vault Access](images/image-4.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/537e6ab1-3a38-4642-a883-f0868d35c17d)
 
 ## Power Automate Flow
 
@@ -134,23 +134,23 @@ For a hands-on experience, you can download a solution containing the sample Flo
 
 **Important Note:** Ensure to secure all input and output parameters within any actions that may utilize the refresh token or access token to safeguard against unauthorized access.
 
-![Sample Power Automate Flow](images/image-13.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/d35adbdc-446b-416a-a609-2d5472efef6a)
 
 ### Get Refresh Token
 
 The journey begins with the 'Get secret' action, courtesy of our custom KeyVault connector, fetching the refresh token from Key Vault to set the stage for the login process.
 
-![Alt text](images/image-20.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/7994e384-b765-434c-9358-9e10810219c7)
 
-WUpon adding this action to your flow, select `Service Principal Connection` as the authentication type, and furnish the details from the app registration created earlier.
+Upon adding this action to your flow, select `Service Principal Connection` as the authentication type, and furnish the details from the app registration created earlier.
 
-![Alt text](images/image-21.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/6c09cffc-f8f3-467c-a4e7-2434c7a8c232)
 
 ### Parse JSON from Refresh Token
 
 Simplify the subsequent steps by parsing the KeyVault response using the 'Parse JSON' action.
 
-![Alt text](images/image-19.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/37600217-adf0-401f-b272-63eb9ebdabc6)
 
 The following schema can be copy/pasted into this action.
 
@@ -192,7 +192,7 @@ The following schema can be copy/pasted into this action.
 
 The 'HTTP' action propels a POST request to the AD OAuth token endpoint to procure the authorization token essential for Azure API interactions.
 
-![Alt text](images/image-18.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/fa7a43fe-4ea2-48b3-87ee-f900e0830ea1)
 
 URI (Replace {tenant-id} with your own tenant Id):
 - Azure Cloud: `https://login.windows.net/{tenant-id}/oauth2/token`
@@ -219,7 +219,7 @@ Body:
 
 Dive into the login response to extract the access and refresh tokens using the 'Parse JSON' action.
 
-![Alt text](images/image-16.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/1cf15732-a132-4b80-8980-f1737ee4719d)
 
 Utilize this schema:
 
@@ -268,13 +268,13 @@ Utilize this schema:
 
 With a new refresh token at hand, update Key Vault using the 'Create or update secret value' action via the AzureKeyVault custom connector, thereby elongating the token's lifespan.
 
-![Alt text](images/image-17.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/aad5bb7d-c6a2-4ffa-8d5b-b8b6d743c4a3)
 
 ### HTTP to Azure API
 
 The curtain call involves employing the access token, obtained from the Login action, to interact with the Azure API. In this illustration, we’re fetching the account SKUs.
 
-![Return data from Azure API](images/image-14.png)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/ec34d95a-8a36-4555-aab7-5ecb8c0dd1ab)
 
 ## Upload Auth Token
 
