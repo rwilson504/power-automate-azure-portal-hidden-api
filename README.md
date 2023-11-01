@@ -89,7 +89,7 @@ Embarking on the automation of OAuth token management necessitates a structured 
 - Generate a new secret, copying the secret value for safekeeping, as it will be crucial when creating the connection for Key Vault in Power Automate.
 - Ensure to also copy the Application (Client) ID and the Directory (tenant) ID, which will be required for the connection within Power Automate.
   
-![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/24dad312-b9bd-4d55-88ea-ca887b191ce6)
+![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/56a79799-527e-41ff-8396-98ed6e1f084f)
 
 ### Install the Azure Key Vault Custom Connectors
   
