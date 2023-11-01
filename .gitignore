@@ -1,0 +1,8 @@
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore launch.json file
+launch.json
+
+# Ignore 'other' folder
+/other/
