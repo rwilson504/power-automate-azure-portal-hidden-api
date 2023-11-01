@@ -40,7 +40,7 @@ There are various avenues to set up the Key Vault – you can employ Azure Power
 
 #### PowerShell Scripts
 
-A script named [01-create-resources-powershell.ps1](01-create-resources-powershell.ps1) is provided to facilitate the creation of a resource group and a Key Vault. It's an executable script where you just need to replace the parameters with your environment details.
+A script named [01-create-resources-powershell.ps1](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/raw/main/power-platform-solutions/01-create-resources-powershell.ps1) is provided to facilitate the creation of a resource group and a Key Vault. It's an executable script where you just need to replace the parameters with your environment details.
 
 ```*.sh-session
 .\01-create-hidden-api-environment.ps1 -Location "eastus" -ResourceGroupName "hidden-resourcegroup" -KeyVaultName "hidden-kv" -TenantId "123e4567-e89b-12d3-a456-426614174000" -SubscriptionId "123e4567-e89b-12d3-a456-426614174001"
@@ -73,7 +73,7 @@ Both deployment methods are designed to abstract the complexities involved in se
 
 For the automation to function seamlessly, acquiring a refresh token initially is crucial. This token will serve as the bridge for obtaining new access tokens, allowing the automation to interact with the main.iam.ad.ext.azure.com API securely.
 
-A PowerShell script named [02-set-initial-refresh-token.ps1](./02-set-initial-refresh-token.ps1) is provided to facilitate this process. When executed, this script will prompt you to sign in twice. The first login should be performed with an account that possesses the requisite permissions to update the Key Vault. Following this, a second login prompt will appear. This is where you would log in using the service account created earlier, which has been configured with just the necessary rights to interact with the Azure API. This dual-login mechanism ensures that the process is securely handled, aligning with the principle of least privilege while setting the stage for automated interactions with the main.iam.ad.ext.azure.com API. The example below shows you how to run the script, replace the parameters with your environment details.
+A PowerShell script named [02-set-initial-refresh-token.ps1](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/raw/main/power-platform-solutions/02-set-initial-refresh-token.ps1) is provided to facilitate this process. When executed, this script will prompt you to sign in twice. The first login should be performed with an account that possesses the requisite permissions to update the Key Vault. Following this, a second login prompt will appear. This is where you would log in using the service account created earlier, which has been configured with just the necessary rights to interact with the Azure API. This dual-login mechanism ensures that the process is securely handled, aligning with the principle of least privilege while setting the stage for automated interactions with the main.iam.ad.ext.azure.com API. The example below shows you how to run the script, replace the parameters with your environment details.
 
 ```*.sh-session
 .\02-set-initial-refresh-token.ps1 -TenantId "123e4567-e89b-12d3-a456-426614174000" -SubscriptionId "123e4567-e89b-12d3-a456-426614174001" -KeyVaultName "hidden-kv"
@@ -93,7 +93,7 @@ Embarking on the automation of OAuth token management necessitates a structured 
 
 ### Install the Azure Key Vault Custom Connectors
   
-Either install the Azure Key Vault custom connectors solution [AzurePortalAPICustomConnector_1_0_0_2](./power-platform-solutions/AzurePortalAPICustomConnector_1_0_0_2.zip), or follow the installation guidelines provided [here](https://github.com/Microsoft/PowerPlatformConnectors/tree/master/custom-connectors/AzureKeyVault). Utilizing a custom connector is vital since the certified connector for Key Vault doesn’t allow writing secrets back to the Key Vault, a feature requisite for this solution.
+Either install the Azure Key Vault custom connectors solution [AzurePortalAPICustomConnector_1_0_0_2](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/raw/main/power-platform-solutions/AzurePortalAPICustomConnector_1_0_0_2.zip), or follow the installation guidelines provided [here](https://github.com/Microsoft/PowerPlatformConnectors/tree/master/custom-connectors/AzureKeyVault). Utilizing a custom connector is vital since the certified connector for Key Vault doesn’t allow writing secrets back to the Key Vault, a feature requisite for this solution.
 - Update the host URL to reflect your new Key Vault.
 
 ![image](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/assets/7444929/e6291654-ecc1-4915-b729-95c8f6b0e3d6)
@@ -130,7 +130,7 @@ Designate the app registration as a Key Vault Secrets Officer in Key Vault, ensu
 
 The culmination of our setup is the creation of a Power Automate flow, designed to automate the process of managing OAuth tokens. Initially, the flow retrieves the existing refresh token from Key Vault, utilizes it to log in the service account, and upon a successful login, acquires a new refresh token alongside an access token. The new refresh token is then stored back in Key Vault, extending its lifespan, while the access token is employed to interact with the `main.iam.ad.ext.azure.com` API.
 
-For a hands-on experience, you can download a solution containing the sample Flow from here: [AzurePortalAPIFlowExample_1_0_0_4.zip](./power-platform-solutions/AzurePortalAPIFlowExample_1_0_0_4.zip).
+For a hands-on experience, you can download a solution containing the sample Flow from here: [AzurePortalAPIFlowExample_1_0_0_4.zip](https://github.com/rwilson504/power-automate-azure-portal-hidden-api/raw/main/power-platform-solutions/AzurePortalAPIFlowExample_1_0_0_4.zip).
 
 **Important Note:** Ensure to secure all input and output parameters within any actions that may utilize the refresh token or access token to safeguard against unauthorized access.
 
